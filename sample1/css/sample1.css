@@ -1,0 +1,35 @@
+.date {
+  float: left;
+  width: 200px;
+}
+
+.kpi {
+  float: left;
+  width: 200px;
+  text-align: right;
+}
+
+.chart {
+  clear: both;
+}
+
+#myTable {
+  border: 1px solid #666;
+  width: 400px;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+td {
+  border: 1px solid #666;
+  margin: 0;
+  cursor: pointer;
+}
+
+td.active {
+  background-color: #ffa;
+}
+
+th.over {
+  color: red;
+}

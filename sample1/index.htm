@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/sample1.css"/>
+    <script src="js/lib/jquery.min.js"></script>
+    <script src="js/lib/lowdash.js"></script>
+    <script src="js/lib/chart.min.js"></script>
+    
+    <script src="js/models.js"></script>
+
+    <script>
+      $(function () {
+
+        var myBarChart = chart.init( '#myChart' );
+        var data = chart.data;
+
+        $( '#dateSelector' ).change( function ( ev ) {
+          var idx = ev.target.selectedIndex,
+              dataSet1 = data.datasets[0].data[ idx ],
+              dataSet2 = data.datasets[1].data[ idx ],
+              newTotal = dataSet1 + dataSet2,
+              childIdx = parseInt(idx,10) + 2;
+
+          $( '#kpi' ).html( newTotal + " Total");
+          $( '.active').removeClass( 'active' );
+          $( '#myTable tr td:nth-child(' + childIdx + ')' ).addClass( 'active' );
+          myBarChart.addData(
+            [ dataSet1, dataSet2 ], data.labels[ idx ] );
+          myBarChart.removeData();
+          myBarChart.update();
+        });
+
+        $( '.kpi' ).hover( function() {
+          var idx = $( '#dateSelector' )[0].selectedIndex,
+              parsedIdx = parseInt(idx,10) + 2;
+          $( '#myTable thead tr th:nth-child(' + parsedIdx + ')' ).addClass( 'over');
+        },function() {
+          var idx = $( '#dateSelector' )[0].selectedIndex,
+              parsedIdx = parseInt(idx,10) + 2,
+              selector = '#myTable thead tr th:nth-child(' + parsedIdx + ')';
+          $( selector ).removeClass( 'over');
+        });
+
+        $( '#myTable td' ).click( function ( ev ) {
+          $( '#dateSelector' ).val(ev.target.cellIndex).trigger('change');
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="date">
+      <select id="dateSelector">
+        <option value="1">September 18th, 2014</option>
+        <option value="2">September 19th, 2014</option>
+        <option value="3">September 20th, 2014</option>
+        <option value="4">September 21st, 2014</option>
+        <option value="5">September 22nd, 2014</option>
+        <option value="6">September 23rd, 2014</option>
+        <option value="7">September 24th, 2014</option>
+      </select>
+    </div>
+    <div class="kpi" id="kpi">93 Total</div>
+    <div class="chart">
+      <canvas id="myChart" width="400" height="200"></canvas>
+    </div>
+    <div class="table">
+      <table id="myTable">
+        <thead>
+          <th></th>
+          <th>9/18</th>
+          <th>9/19</th>
+          <th>9/20</th>
+          <th>9/21</th>
+          <th>9/22</th>
+          <th>9/23</th>
+          <th>9/24</th>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Item 1</td>
+          <td class="active">65</td>
+          <td>59</td>
+          <td>80</td>
+          <td>81</td>
+          <td>56</td>
+          <td>55</td>
+          <td>40</td>
+        </tr>
+        <tr>
+          <td>Item 2</td>
+          <td class="active">28</td>
+          <td>48</td>
+          <td>40</td>
+          <td>19</td>
+          <td>86</td>
+          <td>27</td>
+          <td>90</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
